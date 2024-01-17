@@ -1,0 +1,10 @@
+build:
+  version: "3.0"
+loans:
+  message: "Welcome to EazyBank loans related to local APIs"
+  contactDetails:
+    name: "Egan Pham - Developer"
+    email: "eganpham.99@gmail.com"
+  onCallSupport:
+    - (+84) 989 211 621
+    - (+84) 989 213 418

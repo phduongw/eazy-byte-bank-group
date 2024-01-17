@@ -1,0 +1,10 @@
+build:
+  version: "1.0"
+accounts:
+  message: "Welcome to EazyBank accounts related to Production APIs"
+  contactDetails:
+    name: "Pham Hoang Duong - Prod Owner"
+    email: "{cipher}828a17d4b1cf401ee7b31639a6c60c9516cfbf6981b954c701836744ed8efd6146e608a282d8cba39cff033be29a6f14"
+  onCallSupport:
+    - (+84) 989 211 621
+    - (+84) 989 213 418
