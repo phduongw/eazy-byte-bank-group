@@ -9,6 +9,7 @@ com\dcorp\hightech\acounts\exception\CustomerAlreadyExistsException.class
 com\dcorp\hightech\acounts\service\impl\AccountsServiceImpl.class
 com\dcorp\hightech\acounts\controllers\dto\AccountsDTO.class
 com\dcorp\hightech\acounts\service\AccountsService.class
+com\dcorp\hightech\acounts\controllers\dto\AccountContactDto.class
 com\dcorp\hightech\acounts\entities\CustomerEntity.class
 com\dcorp\hightech\acounts\controllers\AccountsController.class
 com\dcorp\hightech\acounts\repositories\AccountsRepository.class

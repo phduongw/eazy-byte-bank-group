@@ -1,0 +1,23 @@
+services:
+  network-deploy-service:
+    networks:
+      - d-corp-bank
+      -
+  microservice-base-config:
+    extends:
+      service: network-deploy-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m #limit memory location when application run
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+
+  microservice-config-server:
+    extends:
+      service: microservice-base-config
+    depends_on:
+      config-server:
+        condition: service_healthy #Waiting until the config server has the readiness state UP
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8071/
