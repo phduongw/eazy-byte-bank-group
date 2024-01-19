@@ -66,7 +66,7 @@
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<configuration>
-					<to>phduongw/${project.artifactId}:s6</to>
+					<to>phduongw/${project.artifactId}:s7</to>
 				</configuration>
 			</plugin>
 		</plugins>
