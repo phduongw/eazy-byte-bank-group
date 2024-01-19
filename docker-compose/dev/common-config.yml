@@ -2,7 +2,7 @@ services:
   network-deploy-service:
     networks:
       - d-corp-bank
-      -
+
   microservice-base-config:
     extends:
       service: network-deploy-service
@@ -10,8 +10,6 @@ services:
       resources:
         limits:
           memory: 700m #limit memory location when application run
-    environment:
-      SPRING_PROFILES_ACTIVE: default
 
   microservice-config-server:
     extends:
@@ -20,4 +18,19 @@ services:
       config-server:
         condition: service_healthy #Waiting until the config server has the readiness state UP
     environment:
+      SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://config-server:8071/
+      SPRING_DATASOURCE_PASSWORD: 3gAn@130599
+
+  microservice-db-config:
+    extends:
+      service: network-deploy-service
+    image: mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+      interval: 10s
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: 3gAn@130599

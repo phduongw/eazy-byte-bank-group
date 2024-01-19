@@ -47,9 +47,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.2.0</version>
 		</dependency>
 
 		<dependency>
@@ -118,7 +118,7 @@
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<configuration>
-					<to>phduongw/${project.artifactId}:s6</to>
+					<to>phduongw/${project.artifactId}:s7</to>
 				</configuration>
 			</plugin>
 		</plugins>
