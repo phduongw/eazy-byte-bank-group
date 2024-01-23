@@ -17,7 +17,6 @@ public class LoansMapper {
 
     public static Loans mapToLoans(LoansDto loansDto, Loans loans) {
         loans.setLoanNumber(loansDto.getLoanNumber());
-        loans.setLoanType(loansDto.getLoanType());
         loans.setMobileNumber(loansDto.getMobileNumber());
         loans.setTotalLoan(loansDto.getTotalLoan());
         loans.setAmountPaid(loansDto.getAmountPaid());
