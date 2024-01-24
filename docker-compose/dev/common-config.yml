@@ -17,10 +17,13 @@ services:
     depends_on:
       config-server:
         condition: service_healthy #Waiting until the config server has the readiness state UP
+      eureka-server:
+        condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://config-server:8071/
       SPRING_DATASOURCE_PASSWORD: 3gAn@130599
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8070/eureka/
 
   microservice-db-config:
     extends:
