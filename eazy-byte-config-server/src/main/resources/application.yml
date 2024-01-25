@@ -2,18 +2,18 @@ spring:
   application:
     name: CONFIG-SERVER
   profiles:
-    active: git
+    active: native
   cloud:
     config:
       server:
-#        native:
-#          search-locations: "classpath:/config"
-          git:
-            default-label: main
-            timeout: 5
-            clone-on-start: true
-            force-pull: true
-            uri: https://github.com/phduongw/eazy-byte-file-config.git
+        native:
+          search-locations: "classpath:/config"
+#          git:
+#            default-label: main
+#            timeout: 5
+#            clone-on-start: true
+#            force-pull: true
+#            uri: https://github.com/phduongw/eazy-byte-file-config.git
 #  rabbitmq:
 #    host: localhost
 #    port: 5672

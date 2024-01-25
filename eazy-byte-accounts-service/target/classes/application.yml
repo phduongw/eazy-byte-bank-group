@@ -11,6 +11,8 @@ spring:
   jpa:
     show-sql: true
     defer-datasource-initialization: true
+    properties:
+      hibernate.format_sql: true
   sql:
     init:
       mode: always #To run the schema.sql file when starting application
