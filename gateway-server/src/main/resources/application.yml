@@ -46,3 +46,13 @@ logging:
       dcorp:
         hightech:
           gatewayserver: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10 #Monitor 10 request coming, after ten request, you can take the decision whether to continue with the close or open status
+        permitted-number-of-calls-in-half-open-state: 2 #allow amount of request when service in HALF OPEN status
+        failure-rate-threshold: 50 #Mean 50%, when at least 50% request are failed, service will switch to OPEN state from CLOSED state
+        wait-duration-in-open-state: 10000 #Mean 10 000 milliseconds = 10s, after 10s, service will switch to HALF OPEN state from OPEN state
+

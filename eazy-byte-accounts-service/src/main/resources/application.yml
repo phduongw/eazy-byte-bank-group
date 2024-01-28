@@ -20,6 +20,10 @@ spring:
     import: optional:configserver:http://localhost:8071/
   profiles:
     active: "qa"
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 #  rabbitmq:
 #    host: localhost
 #    port: 5672
@@ -34,6 +38,14 @@ management:
   endpoint:
     shutdown:
       enabled: true #Expose shutdown API
+    health:
+      probes:
+        enabled: true
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
   info:
     env:
       enabled: true
@@ -55,3 +67,18 @@ info:
     name: "accounts"
     description: "D-Corp Bank Accounts Application"
     version: "1.0.0"
+logging:
+  level:
+    com:
+      dcorp:
+        hightech:
+          acounts: debug
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10 #Monitor 10 request coming, after ten request, you can take the decision whether to continue with the close or open status
+        permitted-number-of-calls-in-half-open-state: 2 #allow amount of request when service in HALF OPEN status
+        failure-rate-threshold: 50 #Mean 50%, when at least 50% request are failed, service will switch to OPEN state from CLOSED state
+        wait-duration-in-open-state: 10000 #Mean 10 000 milliseconds = 10s, after 10s, service will switch to HALF OPEN state from OPEN state

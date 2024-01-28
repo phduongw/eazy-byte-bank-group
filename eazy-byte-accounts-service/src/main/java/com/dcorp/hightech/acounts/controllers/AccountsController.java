@@ -68,11 +68,12 @@ public class AccountsController {
             responseCode = "200",
             description = "HTTP Status OK"
     )
-    public ResponseEntity<CustomerDTO> fetchAccountDetails(
+    public ResponseEntity<CustomerDTO> fetchAccountDetails(@RequestHeader(AccountConstants.CORRELATION_DEFAULT) String correlationId,
             @RequestParam
             @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile Number must be 10 digits") String mobileNumber
     ) {
         CustomerDTO customer = accountsService.fetchAccount(mobileNumber);
+        log.debug("Correlation ID found: {}", correlationId);
 
         return ResponseEntity.status(HttpStatus.OK).body(customer);
     }

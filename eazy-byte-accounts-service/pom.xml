@@ -87,6 +87,11 @@
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
@@ -128,7 +133,7 @@
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<configuration>
-					<to>phduongw/${project.artifactId}:s8</to>
+					<to>phduongw/${project.artifactId}:s9</to>
 				</configuration>
 			</plugin>
 		</plugins>

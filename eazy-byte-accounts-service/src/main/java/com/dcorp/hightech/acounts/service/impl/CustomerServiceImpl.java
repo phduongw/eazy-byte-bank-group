@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final LoansFeignClient loansFeignClient;
 
     @Override
-    public CustomerDetailsDTO fetchCustomerDetails(String mobileNumber) {
+    public CustomerDetailsDTO fetchCustomerDetails(String mobileNumber, String correlationId) {
         CustomerEntity customer = findCustomerByMobileNumber(mobileNumber)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Customer", "Mobile Number", mobileNumber)
@@ -47,8 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         CustomerDetailsDTO customerDetailsDTO = CustomerMapper.mapToCustomerDetailsDTO(customer, new CustomerDetailsDTO());
         customerDetailsDTO.setAccount(AccountsMapper.mapToAccountsDTO(account, new AccountsDTO()));
-        customerDetailsDTO.setLoansDto(fetchLoansDTO(mobileNumber).getBody());
-        customerDetailsDTO.setCardsDto(fetchCardsDTO(mobileNumber).getBody());
+        customerDetailsDTO.setLoansDto(fetchLoansDTO(mobileNumber, correlationId).getBody());
+        customerDetailsDTO.setCardsDto(fetchCardsDTO(mobileNumber, correlationId).getBody());
         return customerDetailsDTO;
     }
 
@@ -56,12 +56,12 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByMobileNumber(mobileNumber);
     }
 
-    private ResponseEntity<LoansDto> fetchLoansDTO(String mobileNumber) {
-        return loansFeignClient.fetchLoansDetails(mobileNumber);
+    private ResponseEntity<LoansDto> fetchLoansDTO(String mobileNumber, String correlationId) {
+        return loansFeignClient.fetchLoansDetails(mobileNumber, correlationId);
     }
 
-    private ResponseEntity<CardsDto> fetchCardsDTO(String mobileNumber) {
-        return cardsFeignClient.fetchCardsDetails(mobileNumber);
+    private ResponseEntity<CardsDto> fetchCardsDTO(String mobileNumber, String correlationId) {
+        return cardsFeignClient.fetchCardsDetails(mobileNumber, correlationId);
     }
 
 }

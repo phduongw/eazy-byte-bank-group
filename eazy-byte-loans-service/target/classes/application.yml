@@ -33,6 +33,14 @@ management:
   endpoint:
     shutdown:
       enabled: true #Expose shutdown API
+    health:
+      probes:
+        enabled: true
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
     info:
       env:
         enabled: true
@@ -54,3 +62,9 @@ info:
     name: "Loans"
     description: "D-Corp Bank Loans Application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      eazybytes:
+        loans: debug

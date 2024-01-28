@@ -46,7 +46,7 @@ services:
 #      service: network-deploy-service
 
   config-server:
-    image: "phduongw/configserver:s8"
+    image: "phduongw/configserver:s9"
     container_name: config-server-ms
     ports:
       - "8071:8071"
@@ -84,10 +84,16 @@ services:
       SPRING_APPLICATION_NAME: EUREKA-SERVER
 
   accounts:
-    image: "phduongw/accounts:s8"
+    image: "phduongw/accounts:s9"
     container_name: accounts-ms
     ports:
       - "8080:9999"
+    healthcheck:
+      test: curl --fail --silent localhost:9999/actuator/health/readiness | grep UP || exit 1
+      interval: 10s #Each times to retry
+      timeout: 5s #Waiting the response maximum 5s each time of retry
+      retries: 10 #If there is a failure, retry for 10 times
+      start_period: 10s #execute these health command only after 10s.
     environment:
       SPRING_APPLICATION_NAME: accounts
       SPRING_DATASOURCE_URL: jdbc:mysql://accounts-db:3306/accounts-db
@@ -99,10 +105,16 @@ services:
       service: microservice-config-server
 
   loans:
-    image: "phduongw/loans:s8"
+    image: "phduongw/loans:s9"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1
+      interval: 10s #Each times to retry
+      timeout: 5s #Waiting the response maximum 5s each time of retry
+      retries: 10 #If there is a failure, retry for 10 times
+      start_period: 10s #execute these health command only after 10s.
     environment:
       SPRING_APPLICATION_NAME: loans
       SPRING_DATASOURCE_URL: jdbc:mysql://loans-db:3306/loans-db
@@ -114,15 +126,39 @@ services:
       service: microservice-config-server
 
   cards:
-    image: "phduongw/cards:s8"
+    image: "phduongw/cards:s9"
     container_name: cards-ms
     ports:
       - "9000:9000"
+    healthcheck:
+      test: curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1
+      interval: 10s #Each times to retry
+      timeout: 5s #Waiting the response maximum 5s each time of retry
+      retries: 10 #If there is a failure, retry for 10 times
+      start_period: 10s #execute these health command only after 10s.
     environment:
       SPRING_APPLICATION_NAME: cards
       SPRING_DATASOURCE_URL: jdbc:mysql://cards-db:3306/cards-db
     depends_on:
       cards-db:
+        condition: service_healthy
+    extends:
+      file: common-config.yml
+      service: microservice-config-server
+
+  gateway-server:
+    image: "phduongw/gateway-server:s9"
+    container_name: gateway-server
+    ports:
+      - "8072:8072"
+    environment:
+      SPRING_APPLICATION_NAME: GATEWAY-SERVER
+    depends_on:
+      cards:
+        condition: service_healthy
+      accounts:
+        condition: service_healthy
+      loans:
         condition: service_healthy
     extends:
       file: common-config.yml

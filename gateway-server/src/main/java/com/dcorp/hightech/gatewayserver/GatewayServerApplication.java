@@ -23,7 +23,13 @@ public class GatewayServerApplication {
                         .path("/d-corp/accounts/**")
                         .filters(f -> f
 								.rewritePath("/d-corp/accounts/(?<segment>.*)", GatewayConstants.SEGMENT_REGEX)
-								.addResponseHeader(GatewayConstants.X_RESPONSE_HEADER, LocalDateTime.now().toString()))
+								.addResponseHeader(GatewayConstants.X_RESPONSE_HEADER, LocalDateTime.now().toString())
+								.circuitBreaker(config -> config
+										.setName("accountsCircuitBreaker") //Create a Circuit Breaker
+										.setFallbackUri("forward:/contactSupport")
+
+								)
+						)
                         .uri("lb://ACCOUNTS")
                 )
 				.route(path -> path

@@ -18,4 +18,6 @@ public class AccountConstants {
     public static final String MESSAGE_417_UPDATE = "Update operation failed. Please try again or contact Dev team";
     public static final String MESSAGE_417_DELETE = "Delete operation failed. Please try again or contact Dev team";
 
+    public static final String CORRELATION_DEFAULT = "d-corp-bank-correlation-id";
+
 }

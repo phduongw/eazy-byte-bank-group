@@ -107,7 +107,7 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<configuration>
 					<to>
-						<image>phduongw/${project.artifactId}:s8</image>
+						<image>phduongw/${project.artifactId}:s9</image>
 					</to>
 				</configuration>
 			</plugin>
