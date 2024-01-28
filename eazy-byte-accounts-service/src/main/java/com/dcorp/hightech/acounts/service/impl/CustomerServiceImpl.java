@@ -47,8 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         CustomerDetailsDTO customerDetailsDTO = CustomerMapper.mapToCustomerDetailsDTO(customer, new CustomerDetailsDTO());
         customerDetailsDTO.setAccount(AccountsMapper.mapToAccountsDTO(account, new AccountsDTO()));
-        customerDetailsDTO.setLoansDto(fetchLoansDTO(mobileNumber, correlationId).getBody());
-        customerDetailsDTO.setCardsDto(fetchCardsDTO(mobileNumber, correlationId).getBody());
+        customerDetailsDTO.setLoansDto(fetchLoansDTO(mobileNumber, correlationId) != null ? fetchLoansDTO(mobileNumber, correlationId).getBody() : null);
+        customerDetailsDTO.setCardsDto(fetchCardsDTO(mobileNumber, correlationId) != null ? fetchCardsDTO(mobileNumber, correlationId).getBody() : null);
         return customerDetailsDTO;
     }
 
