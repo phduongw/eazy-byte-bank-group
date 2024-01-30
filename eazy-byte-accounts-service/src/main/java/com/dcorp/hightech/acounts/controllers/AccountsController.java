@@ -6,6 +6,7 @@ import com.dcorp.hightech.acounts.controllers.dto.CustomerDTO;
 import com.dcorp.hightech.acounts.controllers.dto.ResponseDTO;
 import com.dcorp.hightech.acounts.controllers.response.ErrorResponse;
 import com.dcorp.hightech.acounts.service.AccountsService;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -144,11 +145,21 @@ public class AccountsController {
                 .body(new ResponseDTO(statusCode, message));
     }
 
+    @Retry(name = "getBuildInfo", fallbackMethod = "getBuildInfoFallBack")
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildInfo() {
+        log.debug("getBuildInfo() method invoked");
+        throw new NullPointerException();
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(environment.getProperty("build.version"));
+    }
+
+    public ResponseEntity<String> getBuildInfoFallBack(Throwable throwable) {
+        log.debug("getBuildInfoFallBack() method invoked");
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(environment.getProperty("build.version"));
+                .body("0.9");
     }
 
     @GetMapping("/contact-details")

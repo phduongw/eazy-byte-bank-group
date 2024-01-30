@@ -182,6 +182,7 @@ public class CardsController {
 
     @GetMapping("/contact-details")
     public ResponseEntity<ContactInfoDTO> getContactDetails() {
+        log.debug("Invoked Loans contact-info API");
         return ResponseEntity.status(HttpStatus.OK).body(contactInfoDTO);
     }
 }

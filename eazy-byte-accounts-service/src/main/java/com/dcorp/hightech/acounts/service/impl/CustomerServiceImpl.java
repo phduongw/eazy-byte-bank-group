@@ -1,7 +1,6 @@
 package com.dcorp.hightech.acounts.service.impl;
 
 import com.dcorp.hightech.acounts.controllers.dto.AccountsDTO;
-import com.dcorp.hightech.acounts.controllers.dto.CustomerDTO;
 import com.dcorp.hightech.acounts.controllers.dto.CustomerDetailsDTO;
 import com.dcorp.hightech.acounts.entities.AccountsEntity;
 import com.dcorp.hightech.acounts.entities.CustomerEntity;

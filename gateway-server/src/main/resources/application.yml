@@ -12,6 +12,9 @@ spring:
         locator:
           enabled: false
           lower-case-service-id: true
+      httpclient:
+        connect-timeout: 1000 #waiting request from gateway to service. If request connects to service over 1s, request will be timeout
+        response-timeout: 2s #maximum time gateway is going to wait to receive the response from the microservice
 
 management:
   endpoints:
