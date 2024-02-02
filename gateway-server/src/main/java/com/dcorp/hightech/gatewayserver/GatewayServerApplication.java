@@ -8,10 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -63,7 +66,16 @@ public class GatewayServerApplication {
                         .path("/d-corp/loans/**")
                         .filters(f -> f
                                 .rewritePath("/d-corp/loans/(?<segment>.*)", GatewayConstants.SEGMENT_REGEX)
-                                .addResponseHeader(GatewayConstants.X_RESPONSE_HEADER, LocalDateTime.now().toString()))
+                                .addResponseHeader(GatewayConstants.X_RESPONSE_HEADER, LocalDateTime.now().toString())
+                                //    Rate Limited Pattern Start
+                                /*
+                                .requestRateLimiter(config -> config
+                                        .setRateLimiter(redisRateLimiter())
+                                        .setKeyResolver(userKeyResolver())
+                                )
+                                 */
+                                //    Rate Limited Pattern end
+                        )
                         .uri("lb://LOANS")
                 )
                 .build();
@@ -77,5 +89,24 @@ public class GatewayServerApplication {
                 .build()
         );
     }
+
+//    Rate Limited Pattern Start
+
+//    @Bean
+//    public RedisRateLimiter redisRateLimiter() {
+//        return new RedisRateLimiter(1, 1, 1);
+//    }
+//
+//    @Bean
+//    KeyResolver userKeyResolver() {
+//        return exchange -> Mono
+//                .justOrEmpty(exchange
+//                        .getRequest()
+//                        .getHeaders()
+//                        .getFirst("user")
+//                )
+//                .defaultIfEmpty("anonymous");
+//    }
+//    Rate Limited Pattern End
 
 }
